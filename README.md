@@ -1,6 +1,9 @@
 A barebones dirt simple basic caption editor for editing blip captions.
 
-Alt+left/right arrow keys to load images
+1. Select a folder with matching .png and .txt file names (image.png, image.txt)
+2. Use Next/Previous button to browse images. Shortcut key: Alt+left/right arrow keys
+3. Edit text as appropriate
+4. Text will save when navigating to the text or previous image.
 
 Mostly chatgpt, only minor adjustments.
 
