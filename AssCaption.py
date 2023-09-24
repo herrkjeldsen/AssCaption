@@ -115,4 +115,13 @@ class ImageCaptionTool:
 if __name__ == "__main__":
     root = tk.Tk()
     app = ImageCaptionTool(root)
+
+    # Check if a folder path is provided as a command-line argument
+    if len(sys.argv) > 1:
+        folder_path = sys.argv[1]
+        if os.path.exists(folder_path):
+            app.image_files, app.text_files = app.get_image_and_text_files(folder_path)
+            if app.image_files:
+                app.load_image_and_text()
+
     root.mainloop()
