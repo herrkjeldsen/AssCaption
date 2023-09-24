@@ -69,8 +69,10 @@ class ImageCaptionTool:
 
             # Load and display the text
             if os.path.exists(text_path):
-                with open(text_path, 'r') as text_file:
+                with open(text_path, 'r', newline='') as text_file:
                     text = text_file.read()
+                    # Remove any extra carriage returns and whitespace at the end
+                    text = text.rstrip()
                     self.text_entry.delete('1.0', tk.END)
                     self.text_entry.insert(tk.END, text)
             else:
@@ -88,8 +90,8 @@ class ImageCaptionTool:
         if 0 <= self.current_index < len(self.text_files):
             text_path = self.text_files[self.current_index]
             edited_text = self.text_entry.get('1.0', tk.END)
-            with open(text_path, 'w') as text_file:
-                text_file.write(edited_text)
+            with open(text_path, 'w', newline='') as text_file:
+                text_file.write(edited_text.replace('\r\n', '\r'))
 
     def load_previous(self, event=None):
         # Save the edited text before switching to the previous pair
