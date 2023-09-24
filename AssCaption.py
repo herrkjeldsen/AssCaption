@@ -2,6 +2,7 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 from PIL import Image, ImageTk
+import sys
 
 class ImageCaptionTool:
     def __init__(self, root):
