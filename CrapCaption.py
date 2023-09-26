@@ -1,13 +1,37 @@
+"""
+CrapCaption - an Image Captioning Tool (Probably a Bit Flaky)
+
+This tool attempts to be a graphical user interface (GUI) for viewing and editing captions for image files.
+It sort of allows users to load a folder containing pairs of PNG images and corresponding text files,
+kind of view and edit captions, somewhat navigate between pairs of images, and try to save edited captions.
+
+Usage:
+- Give it a shot: `python image_caption_tool.py`
+- Optionally, try providing a folder path as a command-line argument, though it may or may not work.
+
+Features (or Lack Thereof):
+- Tries to load images and captions from a selected folder.
+- Displays images in a 512x512 preview (or tries to).
+- Attempts to let you edit captions in a resizable text field (with varying degrees of success).
+- Struggles with navigation between image-caption pairs using "Next" and "Previous" buttons.
+- May or may not respond to keyboard shortcuts (Ctrl + Left/Right) for navigation.
+- Tries to save edited captions when switching between pairs, but no guarantees.
+- Might support looping from the last to the first image and vice versa, but don't hold your breath.
+
+Author: ChatGPT, Marcus Kjeldsen
+Date: 20230926
+"""
+
 import os
 import tkinter as tk
 from tkinter import filedialog
 from PIL import Image, ImageTk
 import sys
 
-class ImageCaptionTool:
+class CrapCaptionTool:
     def __init__(self, root):
         self.root = root
-        self.root.title("Image Captioning Tool")
+        self.root.title("CrapCaption - a dumb Image Captioning Tool")
 
         self.current_index = 0
         self.image_files = []
@@ -117,7 +141,7 @@ class ImageCaptionTool:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = ImageCaptionTool(root)
+    app = CrapCaptionTool(root)
 
     # Check if a folder path is provided as a command-line argument
     if len(sys.argv) > 1:
