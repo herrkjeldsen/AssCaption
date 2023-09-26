@@ -1,4 +1,4 @@
-A barebones dirt simple basic caption editor for editing blip captions.
+A barebones dirt simple caption editor for editing blip captions
 
 <img src="https://i.imgur.com/PR0deNf.png"/>
 
@@ -19,3 +19,5 @@ USE AT YOUR OWN RISK!
 *** Warning3 ***
 THIS SAVES THE TEXT AUTOMATICALLY WHEN SWITCHING IMAGES, NO UNDO!
 USE AT YOUR OWN RISK!
+
+[Latest Windows Executable](https://github.com/herrkjeldsen/CrapCaption/releases/latest)
