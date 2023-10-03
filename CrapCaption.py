@@ -21,7 +21,6 @@ Features (or Lack Thereof):
 Author: ChatGPT, Marcus Kjeldsen
 Date: 20230926
 """
-
 import os
 import tkinter as tk
 from tkinter import filedialog
@@ -35,7 +34,6 @@ class CrapCaptionTool:
 
         self.current_index = 0
         self.image_files = []
-        self.text_files = []
 
         self.image_label = tk.Label(root)
         self.image_label.pack()
@@ -58,31 +56,23 @@ class CrapCaptionTool:
     def load_folder(self):
         folder_path = filedialog.askdirectory()
         if folder_path:
-            self.image_files, self.text_files = self.get_image_and_text_files(folder_path)
+            self.image_files = self.get_image_files(folder_path)
             if self.image_files:
                 self.current_index = 0
                 self.load_image_and_text()
 
-    def get_image_and_text_files(self, folder_path):
+    def get_image_files(self, folder_path):
         image_files = []
-        text_files = []
-
         for filename in os.listdir(folder_path):
-            if filename.lower().endswith(".png"):
+            if filename.lower().endswith((".png", ".jpg", ".jpeg")):
                 image_files.append(os.path.join(folder_path, filename))
-            elif filename.lower().endswith(".txt"):
-                text_files.append(os.path.join(folder_path, filename))
-
-        # Sort the lists to ensure matching pairs
         image_files.sort()
-        text_files.sort()
-
-        return image_files, text_files
+        return image_files
 
     def load_image_and_text(self):
         if 0 <= self.current_index < len(self.image_files):
             image_path = self.image_files[self.current_index]
-            text_path = self.text_files[self.current_index]
+            text_path = image_path.rsplit(".", 1)[0] + ".txt"
 
             # Load and display the image
             image = Image.open(image_path)
@@ -100,8 +90,9 @@ class CrapCaptionTool:
                     self.text_entry.delete('1.0', tk.END)
                     self.text_entry.insert(tk.END, text)
             else:
-                # Only clear the text if the text file does not exist
-                self.text_entry.delete('1.0', tk.END)
+                # Create a new text file with a default caption
+                with open(text_path, 'w', newline='') as text_file:
+                    text_file.write("No caption")
 
             # Enable navigation buttons
             self.prev_button.config(state=tk.NORMAL if self.current_index > 0 else tk.DISABLED)
@@ -111,14 +102,14 @@ class CrapCaptionTool:
             self.text_entry.focus()
 
     def save_text(self):
-        if 0 <= self.current_index < len(self.text_files):
-            text_path = self.text_files[self.current_index]
+        if 0 <= self.current_index < len(self.image_files):
+            text_path = self.image_files[self.current_index].rsplit(".", 1)[0] + ".txt"
             edited_text = self.text_entry.get('1.0', tk.END)
             with open(text_path, 'w', newline='') as text_file:
                 text_file.write(edited_text.replace('\r\n', '\r'))
 
     def load_previous(self, event=None):
-        # Save the edited text before switching to the previous pair
+        # Save the edited text before switching to the previous image
         self.save_text()
 
         if self.current_index > 0:
@@ -129,7 +120,7 @@ class CrapCaptionTool:
         self.load_image_and_text()
 
     def load_next(self, event=None):
-        # Save the edited text before switching to the next pair
+        # Save the edited text before switching to the next image
         self.save_text()
 
         if self.current_index < len(self.image_files) - 1:
@@ -147,7 +138,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         folder_path = sys.argv[1]
         if os.path.exists(folder_path):
-            app.image_files, app.text_files = app.get_image_and_text_files(folder_path)
+            app.image_files = app.get_image_files(folder_path)
             if app.image_files:
                 app.load_image_and_text()
 
